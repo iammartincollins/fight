@@ -12,7 +12,7 @@ function PostCtrl($scope) {
 		$scope.goesFirst = whoFirst($scope.player1, $scope.player2);
 		$scope.fightLog.push($scope.goesFirst + " goes first");
 
-		$scope.winner = combat();
+		$scope.winner = combat($scope.player1, $scope.player2, $scope.goesFirst, $scope.fightLog);
 	};
 }
 
@@ -30,8 +30,29 @@ function whoFirst(p1, p2) {
 	}
 }
 
-function combat() {
-	for (i = 1; i <= 30;i++)
+function combat(p1, p2, whoFirst, fLog) {
+	pOneHP = p1.health;
+	pTwoHP = p2.health;
+	whosTurn = whoFirst;
+
+	for (i = 1; i <= 60;i++) {
+		if(whosTurn === "Player one") {
+			fLog.push("Player one attacks for " + anAttack(p1, p2) + " damage!");
+			whosTurn = "Player two";
+		} else {
+			fLog.push("Player two attacks for " + anAttack(p2, p1) + " damage!");
+			whosTurn = "Player one";
+		}
+	}
+}
+
+function anAttack(giver, receiver) {
+	if(receiver.evade <= Math.random()) { //receiver evades attack
+		return 0;
+	} else {
+		dmg = giver.attack - receiver.defence;
+		return dmg;
+	}
 }
 
 /*init players*/
