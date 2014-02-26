@@ -2,6 +2,7 @@ function PostCtrl($scope) {
 	$scope.playerOneType = "Ninja";
 	$scope.playerTwoType = "Ninja";
 	$scope.goesFirst = "-";
+	$scope.fightLog = [];
 
 
 	$scope.beginFight = function() {
@@ -9,7 +10,9 @@ function PostCtrl($scope) {
 		$scope.player2 = populatePlayer($scope.player2 , $scope.playerTwoType);
 
 		$scope.goesFirst = whoFirst($scope.player1, $scope.player2);
+		$scope.fightLog.push($scope.goesFirst + " goes first");
 
+		$scope.winner = combat();
 	};
 }
 
@@ -26,6 +29,12 @@ function whoFirst(p1, p2) {
 		}
 	}
 }
+
+function combat() {
+	for (i = 1; i <= 30;i++)
+}
+
+/*init players*/
 
 function populatePlayer(player, type) {
 	switch (type) {
