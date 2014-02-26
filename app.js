@@ -1,14 +1,30 @@
 function PostCtrl($scope) {
 	$scope.playerOneType = "Ninja";
 	$scope.playerTwoType = "Ninja";
+	$scope.goesFirst = "-";
 
 
 	$scope.beginFight = function() {
-		//console.log(manobj.health);
-		//$scope.man = makeNinja(manobj);
 		$scope.player1 = populatePlayer($scope.player1 , $scope.playerOneType);
 		$scope.player2 = populatePlayer($scope.player2 , $scope.playerTwoType);
+
+		$scope.goesFirst = whoFirst($scope.player1, $scope.player2);
+
 	};
+}
+
+function whoFirst(p1, p2) {
+	if (p1.speed > p2.speed) {
+		return goesFirst = "Player one";
+	} else if (p2.speed > p1.speed) {
+		return goesFirst = "Player two";
+	} else {
+		if (p1.defence < p2.defence) {
+			return goesFirst = "Player one";
+		} else {
+			return goesFirst = "Player two";
+		}
+	}
 }
 
 function populatePlayer(player, type) {
