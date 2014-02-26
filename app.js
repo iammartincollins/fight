@@ -1,13 +1,9 @@
 function PostCtrl($scope) {
-	
-	$scope.player1 = {"type": "Ninja"};
-	$scope.player2 = {"type": "Samurai"};
-
 	$scope.playerOneType = "Ninja";
 	$scope.playerTwoType = "Ninja";
 
 
-	$scope.getMan = function() {
+	$scope.beginFight = function() {
 		//console.log(manobj.health);
 		//$scope.man = makeNinja(manobj);
 		$scope.player1 = populatePlayer($scope.player1 , $scope.playerOneType);
@@ -22,8 +18,7 @@ function populatePlayer(player, type) {
 		case "Samurai":
 			return makeSamurai(player);
 		case "Brawler":
-			//todo
-			break;
+			return makeBrawler(player);
 	}
 }
 
@@ -31,7 +26,10 @@ function makeNinja(man) {
 	man = {
 		"type": "Ninja",
 		"health": getRandom(40, 60),
-		"defence": getRandom(20, 30)
+		"attack": getRandom(60, 70),
+		"defence": getRandom(20, 30),
+		"speed": getRandom(90, 100),
+		"evade": getRandom(0.3, 0.5)
 	};
 
 	return man;
@@ -41,7 +39,23 @@ function makeSamurai(man) {
 	man = {
 		"type": "Samurai",
 		"health": getRandom(60, 100),
-		"defence": getRandom(35, 40)
+		"attack": getRandom(75, 80),
+		"defence": getRandom(35, 40),
+		"speed": getRandom(60, 80),
+		"evade": getRandom(0.3, 0.4)
+	};
+
+	return man;
+}
+
+function makeBrawler(man) {
+	man = {
+		"type": "Brawler",
+		"health": getRandom(90, 100),
+		"attack": getRandom(65, 75),
+		"defence": getRandom(40, 50),
+		"speed": getRandom(40, 65),
+		"evade": getRandom(0.3, 0.35)
 	};
 
 	return man;
