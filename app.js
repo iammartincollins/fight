@@ -4,7 +4,6 @@ function PostCtrl($scope) {
 	$scope.playerTwoType = "Ninja";
 	$scope.fightLog = [];
 
-
 	$scope.beginFight = function() {
 		$scope.fightLog.length = 0;
 		$scope.player1 = newWarrior($scope.playerOneType, "Player 1");
