@@ -1,10 +1,6 @@
 function Warrior (warriorType) {
 }
 
-Warrior.prototype.getHealth = function() {
-	return this.health;
-};
-
 /**
  * Ninja child
  */
@@ -49,10 +45,12 @@ Brawler.prototype.constructor = Brawler;
 function Brawler (name) {
 	this.player = name;
 	this.health = getRandom(90, 100);
+	this.maxHealth = this.health;
 	this.attack = getRandom(65, 75);
 	this.defence = getRandom(40, 50);
 	this.speed = getRandom(40, 65);
 	this.evade = getRandomDec(0.3, 0.35);
+	this.buff = false;
 	this.type = "Brawler";
 }
 
@@ -67,20 +65,17 @@ function Fight (p1, p2, fLog) {
 
 Fight.prototype.whoFirst = function(p1, p2) {
 	if (p1.speed > p2.speed) {
-		//p1 wins
 		return p1;
 	} else if (p1.speed === p2.speed && p1.defence < p2.defence) {
-		//p1 wins
 		return p1;
 	} else {
-		//p2 wins
 		return p2;
 	}
 };
 
 Fight.prototype.combat = function(p1, p2) {
 	whosTurn = this.first.player;
-	for (i = 1; i <= 60;i++) {
+	for (i = 1; i <= 60; i++) {
 		if(p1.health <= 0) { //determine winner
 			return p2;
 		} else if (p2.health <= 0) {
@@ -95,6 +90,8 @@ Fight.prototype.combat = function(p1, p2) {
 			this.anAttack(p2, p1);
 			whosTurn = p1.player;
 		}
+		this.brawlerSpecial(p1);
+		this.brawlerSpecial(p2);
 	}
 };
 
@@ -105,4 +102,11 @@ Fight.prototype.anAttack = function(giver, receiver) {
 	receiver.health -= result;
 	this.fLog.push(giver.player + " attacks for " + result + " damage! " + receiver.player + " is now on " + receiver.health + " health!");
 	//return result;
+};
+
+Fight.prototype.brawlerSpecial = function(p) {
+	if (p.type === "Brawler" && p.health < (p.maxHealth / 5) && p.buff === false) {
+		p.defence += 10;
+		p.buff = true;
+	}
 };
