@@ -18,7 +18,8 @@ function Ninja (name) {
 	this.attack = getRandom(60, 70);
 	this.defence = getRandom(20, 30);
 	this.speed = getRandom(90, 100);
-	this.evade = getRandom(0.3, 0.5);
+	this.evade = getRandomDec(0.3, 0.5);
+	this.type = "Ninja";
 }
 
 /**
@@ -30,11 +31,12 @@ Samurai.prototype.constructor = Samurai;
 
 function Samurai (name) {
 	this.player = name;
-	this.health = getRandom(40, 60);
-	this.attack = getRandom(60, 70);
-	this.defence = getRandom(20, 30);
-	this.speed = getRandom(90, 100);
-	this.evade = getRandom(0.3, 0.5);
+	this.health = getRandom(60, 100);
+	this.attack = getRandom(75, 80);
+	this.defence = getRandom(35, 40);
+	this.speed = getRandom(60, 80);
+	this.evade = getRandomDec(0.3, 0.4);
+	this.type = "Samurai";
 }
 
 /**
@@ -46,11 +48,12 @@ Brawler.prototype.constructor = Brawler;
 
 function Brawler (name) {
 	this.player = name;
-	this.health = getRandom(40, 60);
-	this.attack = getRandom(60, 70);
-	this.defence = getRandom(20, 30);
-	this.speed = getRandom(90, 100);
-	this.evade = getRandom(0.3, 0.5);
+	this.health = getRandom(90, 100);
+	this.attack = getRandom(65, 75);
+	this.defence = getRandom(40, 50);
+	this.speed = getRandom(40, 65);
+	this.evade = getRandomDec(0.3, 0.35);
+	this.type = "Brawler";
 }
 
 
@@ -78,23 +81,28 @@ Fight.prototype.whoFirst = function(p1, p2) {
 Fight.prototype.combat = function(p1, p2) {
 	whosTurn = this.first.player;
 	for (i = 1; i <= 60;i++) {
-		if(p1.health <= 0) {
+		if(p1.health <= 0) { //determine winner
 			return p2;
 		} else if (p2.health <= 0) {
 			return p1;
 		}
 		if(whosTurn === p1.player) {
-			this.fLog.push("Player one attacks for " + this.anAttack(p1, p2) + " damage! P2 is now on " + p2.health + " health!");
+			//this.fLog.push("Player one attacks for " + this.anAttack(p1, p2) + " damage! P2 is now on " + p2.health + " health!");
+			this.anAttack(p1, p2);
 			whosTurn = p2.player;
 		} else {
-			this.fLog.push("Player two attacks for " + this.anAttack(p2, p1) + " damage! P1 is now on " + p1.health + " health!");
+			//this.fLog.push("Player two attacks for " + this.anAttack(p2, p1) + " damage! P1 is now on " + p1.health + " health!");
+			this.anAttack(p2, p1);
 			whosTurn = p1.player;
 		}
 	}
 };
 
 Fight.prototype.anAttack = function(giver, receiver) {
-	var result = ( receiver.evade <= Math.random() ) ? 0 : (giver.attack - receiver.defence);
-	receiver.health = receiver.health - result;
-	return result;
+	atk = (giver.type === "Ninja" && getRandom(1, 20) === 1) ? giver.attack * 2 : giver.attack; //ninja special
+	var result = ( receiver.evade >= Math.random() ) ? 0 : (atk - receiver.defence); //calculate attack dmg
+	if (receiver.type === "Samurai" && result === 0) { receiver.health -= 10; } // samurai special
+	receiver.health -= result;
+	this.fLog.push(giver.player + " attacks for " + result + " damage! " + receiver.player + " is now on " + receiver.health + " health!");
+	//return result;
 };

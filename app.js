@@ -6,20 +6,19 @@ function PostCtrl($scope) {
 
 
 	$scope.beginFight = function() {
+		$scope.fightLog.length = 0;
 		$scope.player1 = newWarrior($scope.playerOneType, "Player 1");
 		$scope.player2 = newWarrior($scope.playerTwoType, "Player 2");
 		$scope.fight = new Fight($scope.player1, $scope.player2, $scope.fightLog);
-		//$scope.winner = combat($scope.player1, $scope.player2, $scope.goesFirst, $scope.fightLog);
 	};
 }
 
-function anAttack(giver, receiver) {
-	var result = ( receiver.evade <= Math.random() ) ? 0 : (giver.attack - receiver.defence);
-	return result;
- }
-
 function getRandom(low, high) {
 	return Math.floor(Math.random() * (high - low + 1)) + low;
+}
+
+function getRandomDec(low, high) {
+	return result = Math.round( (Math.random() * (high - low) + low) * Math.pow(10, 2) ) / Math.pow(10, 2);
 }
 
 function newWarrior(type, name) {
