@@ -56,7 +56,10 @@ function Brawler (name) {
 
 function Fight (p1, p2, fLog) {
 	this.first = this.whoFirst(p1, p2);
+	this.fLog = fLog;
 	fLog.push(this.first.player + " begins the fight!");
+	this.winner = this.combat(p1, p2);
+	fLog.push(this.winner.player + " is the winner!");
 }
 
 Fight.prototype.whoFirst = function(p1, p2) {
@@ -70,4 +73,28 @@ Fight.prototype.whoFirst = function(p1, p2) {
 		//p2 wins
 		return p2;
 	}
+};
+
+Fight.prototype.combat = function(p1, p2) {
+	whosTurn = this.first.player;
+	for (i = 1; i <= 60;i++) {
+		if(p1.health <= 0) {
+			return p2;
+		} else if (p2.health <= 0) {
+			return p1;
+		}
+		if(whosTurn === p1.player) {
+			this.fLog.push("Player one attacks for " + this.anAttack(p1, p2) + " damage! P2 is now on " + p2.health + " health!");
+			whosTurn = p2.player;
+		} else {
+			this.fLog.push("Player two attacks for " + this.anAttack(p2, p1) + " damage! P1 is now on " + p1.health + " health!");
+			whosTurn = p1.player;
+		}
+	}
+};
+
+Fight.prototype.anAttack = function(giver, receiver) {
+	var result = ( receiver.evade <= Math.random() ) ? 0 : (giver.attack - receiver.defence);
+	receiver.health = receiver.health - result;
+	return result;
 };

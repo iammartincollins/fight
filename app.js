@@ -1,4 +1,5 @@
 function PostCtrl($scope) {
+	//defaults
 	$scope.playerOneType = "Ninja";
 	$scope.playerTwoType = "Ninja";
 	$scope.fightLog = [];
@@ -10,24 +11,6 @@ function PostCtrl($scope) {
 		$scope.fight = new Fight($scope.player1, $scope.player2, $scope.fightLog);
 		//$scope.winner = combat($scope.player1, $scope.player2, $scope.goesFirst, $scope.fightLog);
 	};
-}
-
-function combat(p1, p2, whoFirst, fLog) {
-	pOneHP = p1.health;
-	pTwoHP = p2.health;
-	whosTurn = whoFirst;
-
-	for (i = 1; i <= 60;i++) {
-
-		if(whosTurn === "Player one") {
-			fLog.push("Player one attacks for " + anAttack(p1, p2) + " damage!");
-			whosTurn = "Player two";
-		} else {
-			fLog.push("Player two attacks for " + anAttack(p2, p1) + " damage!");
-			whosTurn = "Player one";
-		}
-
-	}
 }
 
 function anAttack(giver, receiver) {
