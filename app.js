@@ -36,6 +36,7 @@ function combat(p1, p2, whoFirst, fLog) {
 	whosTurn = whoFirst;
 
 	for (i = 1; i <= 60;i++) {
+
 		if(whosTurn === "Player one") {
 			fLog.push("Player one attacks for " + anAttack(p1, p2) + " damage!");
 			whosTurn = "Player two";
@@ -43,17 +44,14 @@ function combat(p1, p2, whoFirst, fLog) {
 			fLog.push("Player two attacks for " + anAttack(p2, p1) + " damage!");
 			whosTurn = "Player one";
 		}
+
 	}
 }
 
 function anAttack(giver, receiver) {
-	if(receiver.evade <= Math.random()) { //receiver evades attack
-		return 0;
-	} else {
-		dmg = giver.attack - receiver.defence;
-		return dmg;
-	}
-}
+	var result = ( receiver.evade <= Math.random() ) ? 0 : (giver.attack - receiver.defence);
+	return result;
+ }
 
 /*init players*/
 
