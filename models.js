@@ -46,9 +46,9 @@ function Brawler (name) {
 function Fight (p1, p2, fLog) {
 	this.first = this.whoFirst(p1, p2);
 	this.fLog = fLog;
+
 	fLog.push(this.first.player + " begins the fight!");
-	this.winner = this.combat(p1, p2);
-	fLog.push(this.winner.player + " is the winner!");
+	fLog.push(this.combat(p1, p2).player + " is the winner!");
 }
 
 Fight.prototype.whoFirst = function(p1, p2) {

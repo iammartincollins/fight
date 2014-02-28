@@ -12,25 +12,40 @@
 
     <div ng-controller="PostCtrl">
         
-        <select name="player1Type" ng-model="playerOneType">
-            <option value="Ninja">Ninja</option>
-            <option value="Samurai">Samurai</option>
-            <option value="Brawler">Brawler</option>
-        </select>
-        <button ng-click="beginFight()">Get man info</button>
-        <select name="player2Type" ng-model="playerTwoType">
-            <option value="Ninja">Ninja</option>
-            <option value="Samurai">Samurai</option>
-            <option value="Brawler">Brawler</option>
-        </select>
-        <h2>Player One</h2>
-        <ul><li ng-repeat="(key, value) in player1">{{key}}: {{value}}</li></ul>
-        <h2>Player Two</h2>
-        <ul><li ng-repeat="(key, value) in player2">{{key}}: {{value}}</li></ul>
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <select name="player1Type" ng-model="playerOneType" class="input-lg">
+                    <option value="Ninja">Ninja</option>
+                    <option value="Samurai">Samurai</option>
+                    <option value="Brawler">Brawler</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button class="btn-lg center-block btn btn-danger" ng-click="beginFight()">Fight!</button>
+            </div>
+            <div class="col-md-4">
+                <select name="player2Type" ng-model="playerTwoType" class="input-lg">
+                    <option value="Ninja">Ninja</option>
+                    <option value="Samurai">Samurai</option>
+                    <option value="Brawler">Brawler</option>
+                </select>
+            </div>
+        </div>
 
-        <h2>Fight log</h2>
-        <ul><li ng-repeat="msg in fightLog track by $index">{{$index}}) {{msg}}</li></ul>
-
+        <div class="row">
+            <div class="col-md-4 text-right">
+                <h2>Player One</h2>
+                <ul class="list-unstyled"><li ng-repeat="(key, value) in player1 | ignore: health">{{key}}: {{value}}</li></ul>
+            </div>
+            <div class="col-md-4">
+                <h2 class="text-center">Fight log</h2>
+                <ul class="list-group"><li class="list-group-item" ng-repeat="msg in fightLog track by $index">{{msg}}</li></ul>
+            </div>
+            <div class="col-md-4">
+                <h2>Player Two</h2>
+                <ul class="list-unstyled"><li ng-repeat="(key, value) in player2">{{key}}: {{value}}</li></ul>
+            </div>
+        </div>
     </div>
 
 </body>
