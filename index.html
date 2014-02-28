@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="fightApp">
 <head>
     <meta charset="UTF-8">
     <title>Fight Time</title>
@@ -32,10 +32,10 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" ng-show="player1">
             <div class="col-md-4 text-right">
                 <h2>Player One</h2>
-                <ul class="list-unstyled"><li ng-repeat="(key, value) in player1 | ignore: health">{{key}}: {{value}}</li></ul>
+                <ul class="list-unstyled"><li ng-repeat="(key, value) in player1 | ignore: 'type' | ignore: 'player'">{{key}}: {{value}}</li></ul>
             </div>
             <div class="col-md-4">
                 <h2 class="text-center">Fight log</h2>
@@ -43,7 +43,7 @@
             </div>
             <div class="col-md-4">
                 <h2>Player Two</h2>
-                <ul class="list-unstyled"><li ng-repeat="(key, value) in player2">{{key}}: {{value}}</li></ul>
+                <ul class="list-unstyled"><li ng-repeat="(key, value) in player2 | ignore: 'type' | ignore: 'player'">{{key}}: {{value}}</li></ul>
             </div>
         </div>
     </div>

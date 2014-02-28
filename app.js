@@ -1,4 +1,7 @@
-function PostCtrl($scope) {
+ 
+var fightApp = angular.module('fightApp', []);
+
+fightApp.controller('PostCtrl', function ($scope) {
 	//defaults
 	$scope.playerOneType = "Ninja";
 	$scope.playerTwoType = "Ninja";
@@ -10,7 +13,21 @@ function PostCtrl($scope) {
 		$scope.player2 = newWarrior($scope.playerTwoType, "Player 2");
 		$scope.fight = new Fight($scope.player1, $scope.player2, $scope.fightLog);
 	};
-}
+});
+
+fightApp.filter('ignore', function() {
+	return function(list, item) {
+		items = {};
+		angular.forEach(list, function(value, key) {
+			if (key != item) {
+				items[key] = value;
+				console.log("key: " + key + " value: " + value + " item: " + item);
+			}
+		});
+		console.log(items);
+		return items;
+	};
+});
 
 function getRandom(low, high) {
 	return Math.floor(Math.random() * (high - low + 1)) + low;
@@ -28,4 +45,8 @@ function newWarrior(type, name) {
 	} else {
 		return new Brawler(name);
 	}
+}
+
+function makeHPPRetty(p) {
+	p.health = (p.health <= 0) ? 0 : p.health;
 }

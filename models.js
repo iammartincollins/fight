@@ -78,6 +78,8 @@ Fight.prototype.combat = function(p1, p2) {
 		}
 		this.brawlerSpecial(p1);
 		this.brawlerSpecial(p2);
+		makeHPPretty(p1);
+		makeHPPretty(p2);
 	}
 };
 
