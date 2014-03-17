@@ -1,14 +1,17 @@
 
 var fightApp = angular.module('fightApp', []);
 
+fightApp.globalLog = new FightLog();
+
 fightApp.controller('PostCtrl', function ($scope, newWarrior) {
 	//defaults
 	$scope.playerOneType = "Ninja";
 	$scope.playerTwoType = "Ninja";
-	$scope.fightLog = [];
+	//$scope.fightLog = new FightLog();
+	$scope.fightLog = fightApp.globalLog;
 
 	$scope.beginFight = function() {
-		$scope.fightLog.length = 0;
+		//$scope.fightLog.messages.length = 0;
 		$scope.player1 = newWarrior.getType($scope.playerOneType, "Player 1");
 		$scope.player2 = newWarrior.getType($scope.playerTwoType, "Player 2");
 		$scope.fight = new Fight($scope.player1, $scope.player2, $scope.fightLog);
