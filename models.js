@@ -39,16 +39,16 @@ function FightLog () {
 FightLog.prototype.addMsg = function (type, msg) {
 	switch (type) {
 		case "Success":
-			this.messages.push("SUCCESS: " + msg + "<h1>hi</h1>");
+			this.messages.push(['success', msg]);
 			break;
 		case "Fail":
-			this.messages.push("FAIL: " + msg);
+			this.messages.push(["fail", msg]);
 			break;
 		case "Info":
-			this.messages.push("INFO: " + msg);
+			this.messages.push(["info", msg]);
 			break;
 		case "Special":
-			this.messages.push("SPECIAL: " + msg);
+			this.messages.push(["special", "SPECIAL! " + msg]);
 			break;
 		default:
 			this.messages.push(msg);
@@ -93,12 +93,13 @@ function Samurai (name) {
 	this.type = "Samurai";
 }
 
-Samurai.prototype.doDefend = function () {
-	if (getRandom(1, 10) === 1) {
-		fightApp.globalLog.addMsg("Special", this.player + " gains +10hp!");
+Samurai.prototype.attemptEvade = function () {
+	var result = ( this.evade <= Math.random() ) ? true : false;
+	if (result && getRandom(1, 10) === 1) {
 		this.health += 10;
+		fightApp.globalLog.addMsg("Special", this.player + " gains +10hp!");
 	}
-	return this.defence;
+	return result;
 };
 
 //=============================
@@ -117,6 +118,16 @@ function Brawler (name) {
 	this.buff = false;
 	this.type = "Brawler";
 }
+
+Brawler.prototype.takeDamage = function (dmg, attacker) {
+	fightApp.globalLog.addMsg("Success", attacker.player + " attacked for " + dmg + " damage!");
+	this.health -= dmg;
+	if (this.health < (this.maxHealth / 5) && this.buff === false) {
+		this.defence += 10;
+		this.buff = true;
+		fightApp.globalLog.addMsg("Special", this.player + " gains 10 defence!");
+	}
+};
 
 //==============================
 
@@ -155,24 +166,7 @@ Fight.prototype.combat = function(p1, p2) {
 		} else if (p2.health <= 0) {
 			return p1;
 		}
-		this.brawlerSpecial(p1);
-		this.brawlerSpecial(p2);
 		makeHPPretty(p1);
 		makeHPPretty(p2);
-	}
-};
-
-// Fight.prototype.anAttack = function(giver, receiver) {
-// 	//atk = (giver.type === "Ninja" && getRandom(1, 20) === 1) ? giver.attack * 2 : giver.attack; //ninja special
-// 	var result = ( receiver.evade >= Math.random() ) ? 0 : (atk - receiver.defence); //calculate attack dmg
-// 	//if (receiver.type === "Samurai" && result === 0  && getRandom(1, 10) === 1) { receiver.health += 10; } // samurai special
-// 	receiver.health -= result;
-// 	this.fLog.push(giver.player + " attacks for " + result + " damage! " + receiver.player + " is now on " + receiver.health + " health!");
-// };
-
-Fight.prototype.brawlerSpecial = function(p) {
-	if (p.type === "Brawler" && p.health < (p.maxHealth / 5) && p.buff === false) {
-		p.defence += 10;
-		p.buff = true;
 	}
 };

@@ -11,7 +11,7 @@ fightApp.controller('PostCtrl', function ($scope, newWarrior) {
 	$scope.fightLog = fightApp.globalLog;
 
 	$scope.beginFight = function() {
-		//$scope.fightLog.messages.length = 0;
+		$scope.fightLog.messages.length = 0;
 		$scope.player1 = newWarrior.getType($scope.playerOneType, "Player 1");
 		$scope.player2 = newWarrior.getType($scope.playerTwoType, "Player 2");
 		$scope.fight = new Fight($scope.player1, $scope.player2, $scope.fightLog);
@@ -53,5 +53,5 @@ function getRandomDec(low, high) {
 }
 
 function makeHPPretty(p) {
-	p.health = (p.health <= 0) ? 0 : p.health;
+	p.health = (p.health < 0) ? 0 : p.health;
 }

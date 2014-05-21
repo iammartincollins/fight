@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Fight Time</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
     <script src="angular.js"></script>
     <script src="models.js"></script>
     <script src="app.js"></script>
@@ -39,7 +40,9 @@
             </div>
             <div class="col-md-4">
                 <h2 class="text-center">Fight log</h2>
-                <ul class="list-group"><li class="list-group-item" ng-repeat="msg in fightLog.messages track by $index">{{msg}}</li></ul>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="msg in fightLog.messages track by $index" ng-class="{'text-success': msg[0] == 'success', 'text-warning': msg[0] == 'fail', 'text-info new-turn': msg[0] == 'info', 'text-primary bg-info': msg[0] == 'special'}">{{msg[1]}}</li>
+                </ul>
             </div>
             <div class="col-md-4">
                 <h2>Player Two</h2>
